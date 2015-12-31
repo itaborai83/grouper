@@ -247,6 +247,14 @@ class TestGrouper(unittest.TestCase):
         output = grouper.run(rows)
         self.assertEqual(output, expected)
 
+    def test_it_aggregates_without_grouping_fields(self):
+        result = Grouper(Sum("A")).run([
+            { "A": 1 }, 
+            { "A": 2 }, 
+            { "A": 3 }, 
+            { "A": 4 }
+        ])
+        self.assertEqual(result, [ { "sum_A": 10 } ])
 
 if __name__ == '__main__':
     unittest.main()

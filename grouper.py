@@ -255,7 +255,7 @@ class Grouper(object):
 
             curr_keys = self.grouping_values_for(row)
             if curr_keys != self.keys:
-                if self.keys:
+                if self.keys is not None:
                     output = self.output()
                     if self.having(output):
                         result.append(self.output())
@@ -263,7 +263,7 @@ class Grouper(object):
             self.keys = curr_keys
             self.aggregates.update(row)
 
-        if curr_keys:
+        if curr_keys is not None:
             self.keys = curr_keys
             output = self.output()
             if self.having(output):
