@@ -1,14 +1,14 @@
 # grouper
 
-Simple GROUP BY like functionality for simple data munging in Python.
+Simple GROUP BY like functionality for data munging in Python.
 
 Grouper's design was inspired by SQL but it is not limited by it. It is primarily aimed to do quick and dirty data aggregation and analysis.
 
-Grouper works out of the box with lists of dicts, but it can be extended
+It works out of the box with lists of dicts, but it can be extended to work with other inputs and outputs.
 
 Grouper is fully unit tested.
 
-Here is a simple example
+Here is a simple example of how to use it.
 
 ```python
 import grouper as g
@@ -24,11 +24,11 @@ rows = [
 f = lambda row: row["Region"] != "Midwest"   
 
 result = g.Grouper(
-  "Country",
-  "Region",
-  g.Sum("Population").as_("Total Pop."),
-  g.Array("City").as_("Cities"),
-  where=f
+    "Country",
+    "Region",
+    g.Sum("Population").as_("Total Pop."),
+    g.Array("City").as_("Cities"),
+    where=f
 ).run(rows)
 
 import pprint
@@ -66,7 +66,7 @@ If you need to change the ouput dictionary key, you need to manually instantiate
 [{'Regiao': 'Midwest'}, {'Regiao': 'Northeast'}, {'Regiao': 'Southeast'}]
 ```
 
-This may come in handy from time to time. You can also implement custom grouping logic by subclassing `KeyExpr` or its parent `RowExpr` and using it directly.
+If you need, you can also implement custom grouping logic by subclassing `KeyExpr` or its parent `RowExpr` and using it directly.
 
 ## Aggregation operations
 
@@ -101,6 +101,7 @@ It can also be changed called the `as_` method.
 [{'Cities': ['Sao Paulo', 'Rio de Janeiro', 'Salvador', 'Brasilia', 'Fortaleza'], 'Country': 'Brazil'}]
 ```
 
+You can create custom aggregation operations by subclassing `Aggregate`.
 ## Filtering
 
 You can filter out rows before anda after the aggregation takes place by specifying the keyword arguments `where` and `having` in the Grouper constructor.
